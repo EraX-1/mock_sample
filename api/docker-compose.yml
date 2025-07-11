@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  api:
+    container_name: erax-chatbot-template-api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - ./src:/app/src
+    tty: true
+    depends_on:
+      - db
+
+  db:
+    container_name: erax-chatbot-template-mysql
+    hostname: erax-chatbot-template-mysql
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: erax-chatbot-template
+
+volumes:
+  mysql_data:

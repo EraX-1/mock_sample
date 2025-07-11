@@ -1,0 +1,50 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: yuyama-mysql-local
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: yuyama
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data_local:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - yuyama-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: yuyama-api-local
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config.local.toml:/app/config.toml:ro
+      - ./local_storage:/app/local_storage
+      - ./src:/app/src
+    environment:
+      - USE_MOCK_SERVICES=true
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - DB_NAME=yuyama
+      - AZURE_CLIENT_ID=mock-client-id
+      - AZURE_CLIENT_SECRET=mock-client-secret
+      - AZURE_TENANT_ID=mock-tenant-id
+      - REDIRECT_URI=http://localhost:3000/auth/callback
+    depends_on:
+      - db
+    networks:
+      - yuyama-network
+
+volumes:
+  mysql_data_local:
+
+networks:
+  yuyama-network:
+    driver: bridge

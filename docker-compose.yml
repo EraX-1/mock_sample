@@ -1,0 +1,70 @@
+services:
+  # データベース
+  db:
+    image: mysql:8.0
+    container_name: yuyama-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: yuyama
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - yuyama-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # APIサーバー（バックエンド）
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: yuyama-api
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./api/config.local.toml:/app/config.toml:ro
+      - ./api/local_storage:/app/local_storage
+      - ./api/src:/app/src
+    env_file:
+      - .env.local
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - yuyama-network
+    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8080
+
+  # フロントエンド（Web）
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8080
+        NEXT_PUBLIC_APP_ENV: development
+    container_name: yuyama-web
+    ports:
+      - "3000:3000"
+    environment:
+      # APIエンドポイント設定
+      - NEXT_PUBLIC_API_URL=http://localhost:8080
+      - NEXT_PUBLIC_APP_ENV=development
+    depends_on:
+      - api
+    networks:
+      - yuyama-network
+
+volumes:
+  mysql_data:
+
+networks:
+  yuyama-network:
+    driver: bridge

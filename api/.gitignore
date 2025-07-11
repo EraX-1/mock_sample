@@ -1,0 +1,9 @@
+/.venv
+/.vscode
+/src/indexed
+/src/tmp/*
+/config.toml
+/alembic/versions/*
+/alembic/__pycache__
+/src/schemas/__pycache__
+/DigiCertGlobalRootCA.crt.pem

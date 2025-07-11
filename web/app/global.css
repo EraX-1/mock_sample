@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,700;1,300&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  @apply leading-[normal] m-0;
+}
+*,
+::before,
+::after {
+  border-width: 0;
+}
+
+@layer utilities {
+  .scrollbar-custom {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+.react-markdown pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: #383a42;
+}
+
+.react-markdown code {
+  display: block;
+}
+
+#pdf-download {
+  display: none;
+}
+
+#no-renderer-download {
+  display: none;
+}

@@ -1,0 +1,20 @@
+.wrapper {
+  overflow: scroll;
+  background-color: gray;
+}
+
+.wrapper :global(#react-doc-viewer) {
+  background-color: gray;
+}
+
+.wrapper :global(#react-doc-viewer #proxy-renderer) {
+  flex: 1;
+}
+
+.wrapper :global(#react-doc-viewer #proxy-renderer #msdoc-renderer) {
+  height: 100%;
+}
+
+#pdf-download {
+  display: none;
+}

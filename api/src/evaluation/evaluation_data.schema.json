@@ -1,0 +1,80 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "Evaluation Data Schema",
+	"description": "A schema representing the structure of evaluation data schema to be used for evaluating the RAG system quantitatively.",
+	"type": "object",
+	"properties": {
+		"queryResult": {
+			"type": "object",
+			"properties": {
+				"value": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"@search.score": {
+								"type": "number",
+								"description": "Search score of the result."
+							},
+							"@search.rerankerScore": {
+								"type": "number",
+								"description": "Reranker score of the result."
+							},
+							"@search.captions": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"text": {
+											"type": "string",
+											"description": "Text caption from the search result."
+										},
+										"highlights": {
+											"type": "string",
+											"description": "Highlighted text from the result."
+										}
+									}
+								},
+								"description": "Array of captions associated with the search result."
+							},
+							"id": {
+								"type": "string",
+								"description": "Unique identifier for the result."
+							},
+							"keywords": {
+								"type": "null",
+								"description": "Keywords associated with the search result, if any."
+							},
+							"content": {
+								"type": "string",
+								"description": "Content of the search result."
+							},
+							"sourceFileName": {
+								"type": "string",
+								"description": "Name of the source file."
+							},
+							"pageNumber": {
+								"type": "integer",
+								"description": "Page number where the result is found."
+							}
+						}
+					},
+					"description": "Array of search results."
+				}
+			}
+		},
+		"relevantDocuments": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"description": "The actual relevant documents related to the query."
+			},
+			"description": "Array of relevant document snippets related to the search."
+		},
+		"query": {
+			"type": "string",
+			"description": "The search query that generated the results."
+		}
+	},
+	"required": ["queryResult", "relevantDocuments", "query"]
+}

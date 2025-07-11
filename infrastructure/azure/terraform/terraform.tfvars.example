@@ -1,0 +1,62 @@
+# ========================================
+# Terraform Configuration Example
+# Copy this file to terraform.tfvars and customize values
+# ========================================
+
+# Basic Configuration
+resource_group_name = "yuyama"
+location           = "Japan East"
+environment        = "production"
+project_name       = "yuyama-rag"
+
+# Azure OpenAI Configuration
+openai_sku = "S0"
+
+# Custom model configuration (optional)
+# openai_models = [
+#   {
+#     name       = "gpt-4"
+#     format     = "OpenAI"
+#     version    = "1106-Preview"
+#     scale_type = "Standard"
+#   },
+#   {
+#     name       = "gpt-4"
+#     format     = "OpenAI"
+#     version    = "vision-preview"
+#     scale_type = "Standard"
+#   },
+#   {
+#     name       = "text-embedding-ada-002"
+#     format     = "OpenAI"
+#     version    = "2"
+#     scale_type = "Standard"
+#   }
+# ]
+
+# Azure AI Search Configuration
+search_sku            = "standard"
+search_replica_count  = 1
+search_partition_count = 1
+
+# Storage Configuration
+storage_tier        = "Standard"
+storage_replication = "LRS"
+
+# Security Configuration
+enable_public_access = true
+# allowed_ip_ranges = ["0.0.0.0/0"]  # Allow all IPs for development
+
+# Key Vault Configuration
+key_vault_soft_delete_retention_days = 7
+enable_purge_protection             = false
+
+# Monitoring Configuration
+application_insights_type = "web"
+
+# Additional Tags (optional)
+additional_tags = {
+  Owner       = "Yuyama Team"
+  CostCenter  = "Engineering"
+  Backup      = "Required"
+}

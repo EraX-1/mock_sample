@@ -1,0 +1,44 @@
+/.venv
+/func/.venv
+/func/__pycache__
+/func/copy_blob/__pycache__
+func/copy_blob/DigiCertGlobalRootCA.crt.pem
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+*.db
+__pycache__/
+*/__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Config files (keep templates, ignore local configs with secrets)
+api/config.local.toml
+scripts/azure-mysql-config.env
+
+# Local storage
+local_storage/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude
+CLAUDE.md
+instructions/
+tmp/
+logs/
