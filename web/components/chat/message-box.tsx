@@ -73,6 +73,7 @@ const MessageBox: NextPage<MessageBoxType> = ({
   const [error, setError] = useState<string>('');
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const [modelList, setModelList] = useState<string[]>([]);
+  const [isWebSearchChecked, setIsWebSearchChecked] = useState<boolean>(false);
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -248,6 +249,28 @@ const MessageBox: NextPage<MessageBoxType> = ({
               }}
             />
           ))}
+          
+          {/* インターネット検索オプション（見た目のみ） */}
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={isWebSearchChecked}
+                onChange={(e) => {
+                  setIsWebSearchChecked(e.target.checked);
+                  console.log('Web Search option clicked:', e.target.checked);
+                }}
+                size="small"
+              />
+            }
+            label="web_search"
+            sx={{
+              minWidth: 'fit-content',
+              mr: 1,
+              '& .MuiFormControlLabel-label': {
+                fontSize: '0.85rem',
+              },
+            }}
+          />
         </Box>
       </Paper>
 
