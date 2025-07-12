@@ -78,6 +78,21 @@ rebuild: down build up ## Rebuild and start all services
 
 # ===================== Development Commands =====================
 
+.PHONY: up-backend
+up-backend: ## Start only DB and API services (for frontend hot reload development)
+	@echo "Starting DB and API services only..."
+	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) -p $(COMPOSE_PROJECT_NAME) up -d --build db api
+	@echo ""
+	@echo "Backend services started successfully."
+	@echo ""
+	@echo "Service URLs:"
+	@echo "  API:      http://localhost:8080"
+	@echo "  API Docs: http://localhost:8080/docs"
+	@echo "  MySQL:    localhost:3306"
+	@echo ""
+	@echo "To start frontend with hot reload:"
+	@echo "  cd web && npm run dev"
+
 .PHONY: dev
 dev: ## Start in development mode (with file watching)
 	@echo "Starting in development mode..."

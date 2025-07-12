@@ -39,6 +39,7 @@ import {
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
   Delete as DeleteIcon,
+  AutoAwesome as AutoAwesomeIcon,
 } from '@mui/icons-material';
 import {
   getChatChatRoomsApi,
@@ -316,11 +317,48 @@ const ModernSidebar: React.FC = () => {
         </Box>
 
         {/* クイックアクション */}
-        <Box className="p-3">
+        <Box className="p-3 space-y-3">
+          {/* GPTボタン */}
+          <Tooltip title={isOpen ? '' : 'GPT'} placement="right">
+            <ListItemButton
+              onClick={() => {
+                router.push('/gpt');
+                if (isMobile) closeSidebar();
+              }}
+              className={`rounded-xl bg-gradient-to-r ${
+                pathname === '/gpt'
+                  ? 'from-purple-100 to-pink-100 border-purple-400'
+                  : 'from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 border-purple-200/50'
+              }`}
+              sx={{
+                justifyContent: isOpen ? 'flex-start' : 'center',
+                px: isOpen ? 2 : 1,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: isOpen ? 36 : 'auto',
+                  justifyContent: 'center'
+                }}
+              >
+                <AutoAwesomeIcon className="text-purple-600" />
+              </ListItemIcon>
+              {isOpen && (
+                <ListItemText
+                  primary="GPT"
+                  primaryTypographyProps={{
+                    className: 'font-medium text-purple-900',
+                  }}
+                />
+              )}
+            </ListItemButton>
+          </Tooltip>
+
+          {/* 新しいチャットボタン */}
           <Tooltip title={isOpen ? '' : '新しいチャット'} placement="right">
             <ListItemButton
               onClick={createNewChat}
-              className="rounded-xl mb-2 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border border-blue-200/50"
+              className="rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border border-blue-200/50"
               sx={{
                 justifyContent: isOpen ? 'flex-start' : 'center',
                 px: isOpen ? 2 : 1,

@@ -69,6 +69,7 @@ const Leftbar: FC<LeftbarProps> = ({
   const [selectedChatRooms, setSelectedChatRooms] = useState<string[]>([]);
   const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] =
     useState<boolean>(false);
+  const [gptDialogOpen, setGptDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
@@ -446,6 +447,38 @@ const Leftbar: FC<LeftbarProps> = ({
             </Button>
             <Button onClick={handleBulkDelete} color="error" autoFocus>
               削除
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* GPTメニュー */}
+        <div className="flex flex-col text-center gap-2 flex-shrink-0 border-t border-gray-300 pt-2 mb-2">
+          <button
+            className="cursor-pointer bg-transparent border-none hover:bg-gray-200 py-2 px-4 rounded"
+            onClick={() => setGptDialogOpen(true)}
+          >
+            GPT
+          </button>
+        </div>
+
+        {/* GPTダイアログ */}
+        <Dialog
+          open={gptDialogOpen}
+          onClose={() => setGptDialogOpen(false)}
+          aria-labelledby="gpt-dialog-title"
+          aria-describedby="gpt-dialog-description"
+        >
+          <DialogTitle id="gpt-dialog-title">
+            GPT
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="gpt-dialog-description">
+              指示、追加の知識、複数のスキルを組み合わせた ChatGPT のカスタム バージョンの検索・作成を行います。
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setGptDialogOpen(false)} color="primary">
+              閉じる
             </Button>
           </DialogActions>
         </Dialog>
