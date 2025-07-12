@@ -67,6 +67,7 @@ const ModernSidebar: React.FC = () => {
     null
   );
   const [isHistoryExpanded, setIsHistoryExpanded] = useState(true);
+  const [isMyGPTExpanded, setIsMyGPTExpanded] = useState(true);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [chatToDelete, setChatToDelete] = useState<string | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -353,7 +354,53 @@ const ModernSidebar: React.FC = () => {
               )}
             </ListItemButton>
           </Tooltip>
+        </Box>
 
+        {/* マイGPT */}
+        <Box className="px-3 mb-2">
+          {isOpen ? (
+            <ListItemButton
+              onClick={() => setIsMyGPTExpanded(!isMyGPTExpanded)}
+              className="rounded-lg"
+            >
+              <ListItemIcon>
+                <AutoAwesomeIcon className="text-purple-600" />
+              </ListItemIcon>
+              <ListItemText
+                primary="マイGPT"
+                primaryTypographyProps={{
+                  className: 'font-medium text-gray-700 text-sm',
+                }}
+              />
+              {isMyGPTExpanded ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+          ) : (
+            <Tooltip title="マイGPT" placement="right">
+              <Box className="flex justify-center w-full py-2">
+                <IconButton size="small">
+                  <AutoAwesomeIcon className="text-purple-600" />
+                </IconButton>
+              </Box>
+            </Tooltip>
+          )}
+        </Box>
+
+        <Collapse in={isOpen && isMyGPTExpanded} timeout="auto" unmountOnExit>
+          <Box className="px-3 pb-3">
+            <List dense>
+              <ListItem>
+                <ListItemText
+                  primary="GPTが見つかりません"
+                  secondary="新しいGPTを作成してください"
+                  className="text-center text-gray-500 py-8"
+                />
+              </ListItem>
+            </List>
+          </Box>
+        </Collapse>
+
+        {/* クイックアクション - 新しいチャットボタン */}
+        <Box className="p-3 pt-0">
           {/* 新しいチャットボタン */}
           <Tooltip title={isOpen ? '' : '新しいチャット'} placement="right">
             <ListItemButton

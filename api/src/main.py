@@ -42,6 +42,8 @@ app.add_middleware(
         "https://yuyama-rag-chatbot-frontend-fgf7byd6b9f4fqck.japaneast-01.azurewebsites.net",
         "http://127.0.0.1:3000",
         "http://localhost:3000",
+        "https://*.ngrok.io",  # ngrok用のワイルドカード
+        "https://*.ngrok-free.app",  # 新しいngrokドメイン用
     ],
     allow_credentials=True,
     allow_methods=["*"],

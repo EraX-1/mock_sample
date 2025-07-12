@@ -10,10 +10,12 @@ import {
   IconButton,
   InputAdornment,
   Chip,
-  FormControl,
-  InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
 } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CloseIcon from '@mui/icons-material/Close';
@@ -41,6 +43,7 @@ export default function GPTPage() {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [selectedModel, setSelectedModel] = useState<string>('');
   const [modelList, setModelList] = useState<string[]>([]);
+  const [restrictionDialogOpen, setRestrictionDialogOpen] = useState(false);
 
   const handleAddConversationStarter = () => {
     setConversationStarters([...conversationStarters, '']);
@@ -109,6 +112,14 @@ export default function GPTPage() {
 
     fetchModelList();
   }, []);
+
+  const handleCreateGPT = () => {
+    setRestrictionDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setRestrictionDialogOpen(false);
+  };
 
   return (
     <Box className="flex flex-col h-screen w-full bg-gray-50 overflow-auto">
@@ -377,13 +388,39 @@ export default function GPTPage() {
               variant="contained"
               className="bg-purple-600 hover:bg-purple-700 text-white normal-case px-12 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
               sx={{ borderRadius: '12px' }}
-              onClick={() => console.log('GPT作成（ハリボテ）')}
+              onClick={handleCreateGPT}
             >
               GPTを作成
             </Button>
           </Box>
         </Paper>
       </Box>
+
+      {/* 制限ダイアログ */}
+      <Dialog
+        open={restrictionDialogOpen}
+        onClose={handleCloseDialog}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle className="font-semibold text-gray-900">
+          GPT作成の制限
+        </DialogTitle>
+        <DialogContent>
+          <Typography className="text-gray-600">
+            プレビュー環境のため、新規GPTの作成を制限しています。
+          </Typography>
+        </DialogContent>
+        <DialogActions className="px-6 pb-4">
+          <Button
+            onClick={handleCloseDialog}
+            variant="contained"
+            className="bg-purple-600 hover:bg-purple-700 text-white"
+          >
+            了解
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
